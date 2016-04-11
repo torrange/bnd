@@ -1,7 +1,7 @@
 FROM phusion/baseimage
 MAINTAINER Tobias Jone <tobiasjone@gmail.com> 
 
-CMD ["./my_init"]
+CMD ["python", "manage.py", "runserver"]
 
 RUN apt-get update \
     && apt-get upgrade -y \
