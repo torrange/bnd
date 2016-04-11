@@ -16,8 +16,8 @@
 6. Open [http://{{digital_ocean_ip:8000/admin}}/](http://127.0.0.1:8000/admin) or [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) in a browser.
 
 7. Login as:
-    1. `admin`
-    2. password sent privately
+    1. user: sent privately
+    2. pass: sent privately
 
 8. To access the API battles endpoint:
     1. JSON: make a get request to: [http://127.0.0.1:8000/api/battle/4/?format=json](http://127.0.0.1:8000/api/battle/4/?format=json) to retrieve information for BattleID #4
