@@ -9,45 +9,34 @@
 <body>
 
   <h1>Public Hashtag Battles</h1>
-  {% for battle in battles %}
-  <h4>{{battle.h1tag}}</h4>
-  <h4>{{battle.h2tag}}</h4>
-  <h4>{{battle.h1typ}}</h4>
-  <h4>{{battle.h2typ}}</h4>
-  <h4>{{battle.hwinr}}</h4>
-  {% endfor %}
 
-<table class="pure-table">
-    <thead>
-        <tr>
-            <th>Battle ID</th>
-            <th>Battle Title</th>
-            <th>Hashtag 1</th>
-            <th>Hashtag 1 Typos</th>
-            <th>Hashtag 2</th>
-            <th>Hashtag 2 Typos</th>
-            <th>Battle Winner</th>
-        </tr>
-    </thead>
+  <table class="pure-table">
+      <thead>
+          <tr>
+              <th>Battle ID</th>
+              <th>Battle Title</th>
+              <th>Hashtag 1</th>
+              <th>Hashtag 1 Typos</th>
+              <th>Hashtag 2</th>
+              <th>Hashtag 2 Typos</th>
+              <th>Battle Winner</th>
+          </tr>
+      </thead>
 
-    <tbody>
-        {% for battle in battles  %}
-        <tr>
-            <td>{{battle.id}}</td>
-            <td>{{battle.battle_title}}</td>
-            <td>{{battle.h1tag}}</td>
-            <td>{{battle.h1typ}}</td>
-            <td>{{battle.h2tag}}</td>
-            <td>{{battle.h2typ}}</td>
-            <td>{{battle.hwinr}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-
-
-
+      <tbody>
+          {% for battle in battles  %}
+          <tr>
+              <td>{{battle.id}}</td>
+              <td>{{battle.battle_title}}</td>
+              <td>{{battle.h1tag}}</td>
+             <td>{{battle.h1typ}}</td>
+             <td>{{battle.h2tag}}</td>
+             <td>{{battle.h2typ}}</td>
+             <td>{{battle.hwinr}}</td>
+         </tr>
+         {% endfor %}
+     </tbody>
+  </table>
 
 </body>
 </html>
