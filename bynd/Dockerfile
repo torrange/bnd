@@ -12,5 +12,5 @@ RUN apt-get update \
 	django-tastypie==0.13.3
 
 
-COPY hashtag_battles / 
+COPY hashtag_battles /hashtag_battles 
 
