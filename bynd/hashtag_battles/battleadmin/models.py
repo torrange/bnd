@@ -18,6 +18,6 @@ class Battle(models.Model):
     h1typ = lambda self: self.h1.values()[0]['typos']
     h2typ = lambda self: self.h2.values()[0]['typos']
     hgreq = lambda self: self.h1typ() == self.h2typ()
-    hcomp = lambda self: self.h1tag() if self.h1typ() > self.h2typ() else self.h2tag()
+    hcomp = lambda self: self.h1tag() if self.h1typ() < self.h2typ() else self.h2tag()
     hwinr = lambda self: 'Draw' if self.hgreq() else self.hcomp()
     __unicode__ = lambda self: self.battle_title 
