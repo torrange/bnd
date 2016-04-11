@@ -17,7 +17,7 @@
 
 7. Login as:
     1. `admin`
-    2. `admin2016`
+    2. password sent privately
 
 8. To access the API battles endpoint:
     1. JSON: make a get request to: [http://127.0.0.1:8000/api/battle/4/?format=json](http://127.0.0.1:8000/api/battle/4/?format=json) to retrieve information for BattleID #4
