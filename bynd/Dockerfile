@@ -1,6 +1,7 @@
 FROM phusion/baseimage
 MAINTAINER Tobias Jone <tobiasjone@gmail.com> 
 
+CMD ["python", "manage.py", "runserver"]
 
 RUN apt-get update \
     && apt-get upgrade -y \
@@ -14,3 +15,5 @@ RUN apt-get update \
 
 COPY hashtag_battles /hashtag_battles 
 
+
+WORKDIR /hashtag_battles
