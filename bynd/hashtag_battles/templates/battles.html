@@ -1,10 +1,19 @@
 <html>
-<head><title>Ordering notice</title></head>
+<head>
+  <title>Ordering notice</title>
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
 
 <body>
 
-<h1>Public Hashtag Battles</h1>
+  <h1>Public Hashtag Battles</h1>
 
+
+  {% for b in battles %}
+  <h2>{{ b.start_date.strftime("%Y-%M-%D %H:%M:%S") }}</h2>
+  {% endfor %}
 
 </body>
 </html>

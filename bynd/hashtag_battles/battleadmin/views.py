@@ -7,5 +7,5 @@ from battleadmin.api import BattleResource
 def index(request):
     battles = [b for b in Battle.objects.all()]
     res = BattleResource()
-    battles_api = res.objects.all()
-    return render(request, 'battles.html', dict(battles=battles))
+    battles_api = [ b for b in res.obj_get_list(res)]
+    return render(request, 'battles.html', dict(battles=battles_api))
