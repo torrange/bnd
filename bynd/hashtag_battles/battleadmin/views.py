@@ -5,4 +5,4 @@ from battleadmin.models import Battle
 
 def index(request):
     battles = [b for b in Battle.objects.all()]
-    return render(request, 'battles.html', battles=battles)
+    return render(request, 'battles.html', dict(battles=battles))
