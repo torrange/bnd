@@ -16,8 +16,8 @@
 6. Open [http://{{digital_ocean_ip:8000/admin}}/](http://127.0.0.1:8000/admin) or [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) in a browser.
 
 7. Login as:
-    1. user: sent privately
-    2. pass: sent privately
+    1. user: `admin`
+    2. pass: `beyond2016`
 
 8. To access the API battles endpoint:
     1. JSON: make a get request to: [http://127.0.0.1:8000/api/battle/4/?format=json](http://127.0.0.1:8000/api/battle/4/?format=json) to retrieve information for BattleID #4
@@ -29,7 +29,6 @@
 10. Additional improvements to implement`
     1. Extend the TastyPie API to accept POST requests for Battle creation
     2. Add some visual sugar to the public /battles/ view
-    3. Register the API in Django Admin for API Key storage
 
 These steps can be followed verbatim on [http://localhost/] (http://localhost/) running an instance of the docker.io daemon
 
