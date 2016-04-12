@@ -7,7 +7,7 @@
 
 2. `sudo apt-get update && sudo apt-get install git docker.io`
 
-3. `git clone https://github.com/https://github.com/torrange/bnd.git
+3. `git clone https://github.com/torrange/bnd.git`
 
 4. `cd ./bnd/bynd/ && sudo docker build .`
 
