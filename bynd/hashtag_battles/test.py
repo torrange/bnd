@@ -1,7 +1,26 @@
-import tornado.web
+from sqlasync import database
+from tornado.options import options, define, parse_command_line
+import django.core.handlers.wsgi
 import tornado.httpserver
 import tornado.ioloop
-from sqlasync import database
+import tornado.web
+import tornado.wsgi
+if django.VERSION[1] > 5:
+        django.setup()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 from django.conf import settings
 settings.configure(DATABASE_ENGINE='sqlite3', DATABASE_NAME='db.sqlite3')
