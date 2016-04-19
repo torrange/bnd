@@ -1,3 +1,4 @@
+import os
 from sqlasync import database
 from tornado.options import options, define, parse_command_line
 import django.core.handlers.wsgi
@@ -8,30 +9,16 @@ import tornado.wsgi
 if django.VERSION[1] > 5:
         django.setup()
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hashtag_battles.settings")
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-from django.conf import settings
-settings.configure(DATABASE_ENGINE='sqlite3', DATABASE_NAME='db.sqlite3')
 
 
 from battleadmin.models import Battle
 from battleadmin.models import Hashtag
 
-
-battles = queryset = Battle.objects.all()
-hashtags = Hashtag.objects.all()
 
 
 
