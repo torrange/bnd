@@ -7,6 +7,14 @@ from django.conf import settings
 settings.configure(DATABASE_ENGINE='sqlite3', DATABASE_NAME='db.sqlite3')
 
 
+from battleadmin.models import Battle
+from battleadmin.models import Hashtag
+
+
+battles = queryset = Battle.objects.all()
+hashtags = Hashtag.objects.all()
+
+
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -38,22 +46,9 @@ class NewUserHandler(BaseHandler):
 #
 class GetUserHandler(BaseHandler):
     def get(self):
-	idstr = self.get_argument("id", "0")
-	id = int(idstr)
-
-    # if no id, get all users. Else get the specific id
-	if id == 0:
-	    userList = self.db.query("select * from users") 
-	    if userList is None: userList = []
-	else:
-	    sqlstr = 'select * from users where id = %d' % (id)
-	    user = self.db.get(sqlstr)
-	    userList = [user]
-
-	outp = ""
-	for user in userList:
-	    outp = outp + "<br> user (%d) => %s" % (user.id, user.name)
-	self.write("<html><body>" + outp + "</body></html>")
+	battles = queryset = Battle.objects.all()
+        hashtags = Hashtag.objects.all()
+	self.write(hashtags)
 
 class Application(tornado.web.Application):
     def __init__(self):
