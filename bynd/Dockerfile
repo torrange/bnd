@@ -9,8 +9,11 @@ RUN apt-get update \
 	python-pip \
 	python-lxml \
 	python-defusedxml \
+	build-essential \
+	python-dev \
     && pip install django==1.9.5 \
-	django-tastypie==0.13.3
+	django-tastypie==0.13.3 \
+	tornado==4.2.1
 
 
 COPY hashtag_battles /hashtag_battles 
