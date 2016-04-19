@@ -3,6 +3,12 @@ import tornado.httpserver
 import tornado.ioloop
 from sqlasync import database
 
+from django.conf import settings
+settings.configure(DATABASE_ENGINE='sqlite3', DATABASE_NAME='db.sqlite3')
+
+
+
+
 class BaseHandler(tornado.web.RequestHandler):
     @property
     def db(self):
