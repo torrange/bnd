@@ -1,4 +1,3 @@
-import os
 from sqlasync import database
 from tornado.options import options, define, parse_command_line
 import django.core.handlers.wsgi
@@ -6,16 +5,6 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.wsgi
-if django.VERSION[1] > 5:
-        django.setup()
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hashtag_battles.settings")
-
-
-
-
-
-
 from battleadmin.models import Battle
 from battleadmin.models import Hashtag
 
@@ -50,11 +39,11 @@ class NewUserHandler(BaseHandler):
 # http://localhost:8080/user?id=2
 #
 #
-class GetUserHandler(BaseHandler):
+class GetUserHandler(tornado.web.RequestHandler):
     def get(self):
 	battles = queryset = Battle.objects.all()
         hashtags = Hashtag.objects.all()
-	self.write(hashtags)
+	self.write("OK")
 
 class Application(tornado.web.Application):
     def __init__(self):
