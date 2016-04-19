@@ -43,7 +43,7 @@ class GetUserHandler(tornado.web.RequestHandler):
     def get(self):
 	battles = queryset = Battle.objects.all()
         hashtags = Hashtag.objects.all()
-	self.write("OK")
+	self.write({"response":"OK"})
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -51,10 +51,6 @@ class Application(tornado.web.Application):
 	settings = {}
 	tornado.web.Application.__init__(self, handlers, **settings)
 
-	self.db = database.Connection()
-	self.db.execute('create table users (id integer, name char(20));')
-	self.db.execute('insert into users (id, name) values (1,"jack");')
-	self.db.execute('insert into users (id, name) values (2,"jill");')
 
 def main():
     settings = {} 
