@@ -11,6 +11,9 @@ RUN apt-get update \
 	python-defusedxml \
 	build-essential \
 	python-dev \
+	python-sklearn \
+	python-scipy \
+	python-numpy \
     && pip install django==1.9.5 \
 	django-tastypie==0.13.3 \
 	tornado==4.2.1
