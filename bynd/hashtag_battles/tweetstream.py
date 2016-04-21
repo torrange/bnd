@@ -57,7 +57,6 @@ auth = OAuth("722577635939889152-R5qyydnehjWRd9ZFwmK3K5PZEjg6MC3",
 twitter_stream = TwitterStream(auth=auth)
 hashtags = [TweetThreader(ht.tag) for ht in Hashtag.objects.all()]
 
-#for hashtag_tuple in hashtags:
 
 
 
