@@ -9,11 +9,11 @@ class TweetThreader(object):
     def __init__(self, hashtag, interval=1):
 	self.interval = interval
 	self.hashtag = hashtag
-	thread = threading.Thread(target=self.stream_processor, args=(self.hashtag))
+	thread = threading.Thread(target=self.stream, args=(self.hashtag))
 	thread.daemon = True
 	thread.start()
 
-    def stream_processor(self, hashtag):
+    def stream(self, hashtag):
 	iterator = twitter_stream.statuses.filter(track=hashtag)
 	hashtag_object = Hashtag.objects.get(tag=hashtag)
 	while True:
