@@ -7,28 +7,28 @@ import time
 
 class TweetThreader(object):
     def __init__(self, hashtag, interval=1):
-	self.interval = interval
-	self.hashtag = hashtag
-	thread = threading.Thread(target=stream, args=(self.hashtag))
-	thread.daemon = True
-	thread.start()
+        self.interval = interval
+        self.hashtag = hashtag
+        thread = threading.Thread(target=self.stream, args=(self.hashtag))
+        thread.daemon = True
+        thread.start()
 
-def stream(self, hashtag):
-    iterator = twitter_stream.statuses.filter(track=hashtag)
-    hashtag_object = Hashtag.objects.get(tag=hashtag)
-    while True:
-        for tweet in iterator:
-            try:
-                err_count = bayespell.errors(tweet["text"].replace(hashtag, "")
-                print err_count)
-                hashtag_object.typos = hashtag_object.typos + err_count
-                hashtag_object.save()
-                continue
-            except:
-                print "raise!"
-                time.sleep(5)
-                iterator = twitter_stream.statuses.filter(track=hashtag)
-                continue
+    def stream(self, hashtag):
+        iterator = twitter_stream.statuses.filter(track=hashtag)
+        hashtag_object = Hashtag.objects.get(tag=hashtag)
+        while True:
+            for tweet in iterator:
+                try:
+                    err_count = bayespell.errors(tweet["text"].replace(hashtag, "")
+                    print err_count)
+                    hashtag_object.typos = hashtag_object.typos + err_count
+                    hashtag_object.save()
+                    continue
+                except:
+                    print "raise!"
+                    time.sleep(5)
+                    iterator = twitter_stream.statuses.filter(track=hashtag)
+                    continue
 
 
 
