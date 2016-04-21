@@ -1,13 +1,11 @@
-from battleadmin.models import Battle
 from battleadmin.models import Hashtag
 from twitter import *
 import bayespell
 
-battles = queryset = Battle.objects.all()
-hashtags = Hashtag.objects.all()
+hashtags = [(ht.tag, ht) for ht in Hashtag.objects.all()]
+
 print hashtags
 
-print dir(hashtags)
 
 auth = OAuth("722577635939889152-R5qyydnehjWRd9ZFwmK3K5PZEjg6MC3", 
     "Ig4EC87EzQxilIhedGUKM7jPZleUmJLFc0bHnJuuAjnfK",
