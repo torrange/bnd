@@ -38,18 +38,18 @@ def check_new_tags(hashtags):
     while True:
         _hashtags = [str(h.tag) for h in Hashtag.objects.all()]
         if hashtags == _hashtags:
-    	    time.sleep(3)
-    	    continue
+            time.sleep(3)
+            continue
         else:
-    	    new_jobs = []
-    	    delete_jobs = []
-    	    for h in _hashtags:
-    	        if h not thread_queue:
-    		    new_jobs.append(h)
-    	    if len(new_jobs) >= 1:
-    	        makejobs(new_jobs)
-    	    hashtags = _hashtags
-	    time.sleep(3)
+            new_jobs = []
+            delete_jobs = []
+            for h in _hashtags:
+                if h not thread_queue:
+                    new_jobs.append(h)
+            if len(new_jobs) >= 1:
+                 makejobs(new_jobs)
+            hashtags = _hashtags
+            time.sleep(3)
 
 def makejobs(hashtags):
     for hashtag in hashtags:
