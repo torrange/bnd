@@ -6,18 +6,17 @@ import time
 
 
 class TweetThreader(object):
-
     def __init__(self, hashtag, interval=1):
-        self.interval = interval
+	self.interval = interval
 	self.hashtag = hashtag
-        thread = threading.Thread(target=self.stream_processor, args=(self.hashtag))
-        thread.daemon = True
-        thread.start()
+	thread = threading.Thread(target=self.stream_processor, args=(self.hashtag))
+	thread.daemon = True
+	thread.start()
 
     def stream_processor(self, hashtag):
 	iterator = twitter_stream.statuses.filter(track=hashtag)
-        hashtag_object = Hashtag.objects.get(tag=hashtag)
-        while True:
+	hashtag_object = Hashtag.objects.get(tag=hashtag)
+	while True:
 	    for tweet in iterator:
 		try:
 		    err_count = bayespell.errors(tweet["text"].replace(hashtag, "")
@@ -33,7 +32,7 @@ class TweetThreader(object):
 
 
 
-auth = OAuth("722577635939889152-R5qyydnehjWRd9ZFwmK3K5PZEjg6MC3", 
+auth = OAuth("722577635939889152-R5qyydnehjWRd9ZFwmK3K5PZEjg6MC3",
     "Ig4EC87EzQxilIhedGUKM7jPZleUmJLFc0bHnJuuAjnfK",
     "pPCXeAvd9wv5WP9WlA1h52fWd",
     "62us2GYwyUniV9TtDavbTdlCjS3nw22N8bCiN41UwrnDGEc7iX")
@@ -51,13 +50,3 @@ hashtags = [TweetThreader(ht.tag) for ht in Hashtag.objects.all()]
 
 
 
-
-def hashtag_stream_processor(hashtag):
-    iterator = twitter_stream.statuses.filter(track=hashtag)
-    hashtag_object = Hashtag.objects.get(tag=hashtag)
-    for tweet in iterator:
-	err_count = bayespell.errors(tweet["text"].replace(hashtag, ""))
-	hashtag_object.typos = hashtag_object.typos + err_count
-	hashtag_object.save()
-	continue
-    return 
