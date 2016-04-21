@@ -1,8 +1,7 @@
-#from battleadmin.models import Battle
-#from battleadmin.models import Hashtag
+from battleadmin.models import Battle
+from battleadmin.models import Hashtag
 from twitter import *
-from bayespell import *
-
+import bayespell
 
 #battles = queryset = Battle.objects.all()
 #hashtags = Hashtag.objects.all()
