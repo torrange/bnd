@@ -5,7 +5,7 @@ import threading
 import time
 
 
-class TweetThreading(object):
+class TweetThreader(object):
 
     def __init__(self, hashtag, interval=1):
         self.interval = interval
@@ -30,22 +30,6 @@ class TweetThreading(object):
 		    time.sleep(5)
 		    iterator = twitter_stream.statuses.filter(track=hashtag)
 		    continue
-
-		    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
