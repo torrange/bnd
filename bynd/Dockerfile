@@ -17,7 +17,8 @@ RUN apt-get update \
     && pip install django==1.9.5 \
 	django-tastypie==0.13.3 \
 	tornado==4.2.1 \
-	cython
+	cython \
+	futures
 
 
 COPY hashtag_battles /hashtag_battles 
