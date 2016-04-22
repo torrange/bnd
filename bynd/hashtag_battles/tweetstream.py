@@ -69,7 +69,11 @@ def check_new_tags(hashtags):
 
 
 def main():
-    makejobs(hashtags)
+    #makejobs(hashtags)
+    for hashtag in hashtags:
+	print "creating job for: %s" % hashtag
+        x = thread_pool.submit(hashtag_stream, hashtag)
+        thread_queue.append(hashtag)
     thread_pool.submit(check_new_tags, hashtags)
 
 main()
