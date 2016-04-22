@@ -33,23 +33,6 @@ def hashtag_stream(hashtag):
                  iterator = twitter_stream.statuses.filter(track=hashtag)
                  continue
 
-def check_new_tags(hashtags):
-    hashtags = hashtags
-    while True:
-        _hashtags = [str(h.tag) for h in Hashtag.objects.all()]
-        if hashtags == _hashtags:
-            time.sleep(3)
-            continue
-        else:
-            new_jobs = []
-            delete_jobs = []
-            for h in _hashtags:
-                if h not thread_queue:
-                    new_jobs.append(h)
-            if len(new_jobs) >= 1:
-                 makejobs(new_jobs)
-            hashtags = _hashtags
-            time.sleep(3)
 
 def makejobs(hashtags):
     for hashtag in hashtags:
@@ -57,13 +40,37 @@ def makejobs(hashtags):
         x = thread_pool.submit(hashtag_stream, hashtag)
         thread_queue.append(hashtag)
 
-def makepoll(hashtags):
-    print "polling for new tags..."
-    x = thread_pool.submit(check_new_tags, hashtags)
+
+
+
+
+
+
+def check_new_tags(hashtags):
+    hashtags = hashtags
+    while True:
+        print "checking for new tags..."
+        _hashtags = [str(h.tag) for h in Hashtag.objects.all()]
+        if hashtags == _hashtags:
+            time.sleep(3)
+            pass
+        else:
+            new_jobs = []
+            delete_jobs = []
+            for h in _hashtags:
+                if h not in thread_queue:
+                    new_jobs.append(h)
+            if len(new_jobs) >= 1:
+                makejobs(new_jobs)
+            hashtags = _hashtags
+            time.sleep(3)
+        continue
+
+
 
 def main():
     makejobs(hashtags)
-    makepoll(hashtags)
+    thread_pool.submit(check_new_tags, hashtags)
 
 main()
 
