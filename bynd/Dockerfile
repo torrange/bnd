@@ -16,7 +16,8 @@ RUN apt-get update \
 	python-numpy \
     && pip install django==1.9.5 \
 	django-tastypie==0.13.3 \
-	tornado==4.2.1 \
+        tornado==4.2.1 \
+	pyzmq \
 	cython \
 	futures
 

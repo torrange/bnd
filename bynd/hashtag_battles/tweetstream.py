@@ -3,17 +3,9 @@ from battleadmin.models import Hashtag
 from twitter import *
 import time
 import bayespell
+import zmq
+import thread
 
-auth = OAuth("722577635939889152-R5qyydnehjWRd9ZFwmK3K5PZEjg6MC3",
-    "Ig4EC87EzQxilIhedGUKM7jPZleUmJLFc0bHnJuuAjnfK",
-    "pPCXeAvd9wv5WP9WlA1h52fWd",
-    "62us2GYwyUniV9TtDavbTdlCjS3nw22N8bCiN41UwrnDGEc7iX")
-
-twitter_stream = TwitterStream(auth=auth)
-hashtags = [str(h.tag) for h in Hashtag.objects.all()]
-
-thread_queue = []
-thread_pool = futures.ThreadPoolExecutor(8)
 
 def hashtag_stream(hashtag):
     hashtag = str(hashtag)
@@ -34,42 +26,48 @@ def hashtag_stream(hashtag):
                  iterator = twitter_stream.statuses.filter(track=hashtag)
                  continue
 
+                
 
-def makejobs(hashtags, thread_pool):
+auth = OAuth("722577635939889152-R5qyydnehjWRd9ZFwmK3K5PZEjg6MC3",
+             "Ig4EC87EzQxilIhedGUKM7jPZleUmJLFc0bHnJuuAjnfK",
+             "pPCXeAvd9wv5WP9WlA1h52fWd",
+             "62us2GYwyUniV9TtDavbTdlCjS3nw22N8bCiN41UwrnDGEc7iX")
+
+twitter_stream = TwitterStream(auth=auth)
+hashtags = [str(h.tag) for h in Hashtag.objects.all()]
+thread_queue = []
+
+def makejobs(hashtags):
     for hashtag in hashtags:
         print "creating job for: %s" % hashtag
-        x = thread_pool.submit(hashtag_stream, hashtag)
+        thread.start_new_thread(hashtag_stream, (hashtag,))
         thread_queue.append(hashtag)
 
+def makejob(hashtag):
+    print "creating job for: %s" % hashtag
+    thread.start_new_thread(hashtag_stream, (hashtag,))
+    thread_queue.append(hashtag)
 
-def check_new_tags(hashtags, thread_pool):
-    hashtags = hashtags
+
+                
+def main(makejobs, makejob):    
+    makejobs(hashtags)
+    ctx = zmq.Context()
+    socket = ctx.socket(zmq.SUB)
+    socket.bind("tcp://0.0.0.0:6000")
+    socket.setsockopt(zmq.SUBSCRIBE, "job::")
+    print "listening..."
     while True:
-        print "checking for new tags..."
-        _hashtags = [str(h.tag) for h in Hashtag.objects.all()]
-        if hashtags == _hashtags:
-            time.sleep(3)
-            pass
+        msg = socket.recv()
+        msg = msg.split("::")[-1]
+        if msg in thread_queue:
+            print "%s in thread_queue" % msg
         else:
-            new_jobs = []
-            delete_jobs = []
-            for h in _hashtags:
-                if h not in thread_queue:
-                    new_jobs.append(h)
-            if len(new_jobs) >= 1:
-                print new_jobs
-                makejobs(new_jobs)
-            hashtags = _hashtags
-            time.sleep(3)
+            print "%s not in thread_queue" % msg
+            makejob(msg)
         continue
 
-
-
-def main():
-    thread_pool.submit(makejobs, hashtags, thread_pool)
-    thread_pool.submit(check_new_tags, hashtags, thread_pool)
-
-main()
+main(makejobs, makejob)
 
 if __name__=="__main__":
     main()

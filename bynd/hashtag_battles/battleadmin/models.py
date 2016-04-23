@@ -1,10 +1,21 @@
 from __future__ import unicode_literals
 from django.db import models
+import zmq
+
+
+ctx = zmq.Context()
+socket = ctx.socket(zmq.PUB)
+socket.connect("tcp://127.0.0.1:6000")
 
 class Hashtag(models.Model):
     tag = models.CharField(max_length=140)
     typos = models.IntegerField(default=0)
     __unicode__ = lambda self: self.tag 
+    
+    def save(self, *args, **kwargs):
+        socket.send_string("job::%s"%self.tag)
+        super(Hashtag, self).save(*args, **kwargs)
+    
 
 class Battle(models.Model):
     battle_title = models.CharField(max_length=280)
