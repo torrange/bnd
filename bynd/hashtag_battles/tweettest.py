@@ -20,12 +20,12 @@ def hashtag_stream(hashtags, auth):
                     for htag in hashtags:
                         if htag in str(tweet["text"]):
                             hashtag = str(htag)
-                    err_count = bayespell.errors(tweet["text"])
+                            err_count = bayespell.errors(tweet["text"])
                     print hashtag, err_count
-                    hashtag_object = Hashtag.objects.get(tag=hashtag)
-                    hashtag_object.typos = hashtag_object.typos + err_count
-                    hashtag_object.save()
-                    
+                    if hashtag != "#": 
+                        hashtag_object = Hashtag.objects.get(tag=hashtag)
+                        hashtag_object.typos = hashtag_object.typos + err_count
+                        hashtag_object.save()
                 except:
                     pass
                 continue
