@@ -10,8 +10,14 @@ import thread
 def hashtag_stream(hashtags, auth):
     print "listening for %s" % ",".join(hashtags)
     twitter_stream = TwitterStream(auth=auth)
-    iterator = twitter_stream.statuses.filter(track=",".join(hashtags))
+    try:
+        iterator = twitter_stream.statuses.filter(track=",".join(hashtags))
+    except:
+        time.sleep(3)
+        iterator = twitter_stream.statuses.filter(track=",".join(hashtags))
     while True:
+        print "*"*40
+        print "stack size: %d" % thread.stack_size()
         print "started thread worker for %s" % ",".join(hashtags)
         for tweet in iterator:
             try: 
@@ -22,7 +28,7 @@ def hashtag_stream(hashtags, auth):
                             hashtag = str(htag)
                             err_count = bayespell.errors(tweet["text"])
                     print hashtag, err_count
-                    if hashtag != "#": 
+                    if hashtag.strip() != "#": 
                         hashtag_object = Hashtag.objects.get(tag=hashtag)
                         hashtag_object.typos = hashtag_object.typos + err_count
                         hashtag_object.save()
@@ -32,10 +38,12 @@ def hashtag_stream(hashtags, auth):
             except:
                 time.sleep(3)
                 twitter_stream = TwitterStream(auth=auth)
-                iterator = twitter_stream.statuses.filter(track=",".join(hashtags))
+                try:
+                    iterator = twitter_stream.statuses.filter(track=",".join(hashtags))
+                except:
+                    time.sleep(3)
+                    iterator = twitter_stream.statuses.filter(track=",".join(hashtags))
                 continue
-            if die == 1:
-                False
 
 
 
@@ -63,10 +71,8 @@ def main():
             print "%s created. creating job..." % msg
             hashtags.append(msg)
             global die
-            die = 1
             x = thread.start_new_thread(hashtag_stream, (hashtags, auth))
             thread_queue.append(x)
-            die = 0
         continue
 
 main()
